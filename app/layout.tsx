@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Spectral, Manrope, JetBrains_Mono } from "next/font/google";
+import { Caveat, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/providers/language-provider";
 import { BranchProvider } from "@/providers/branch-provider";
 import { CartProvider } from "@/providers/cart-provider";
 
-const spectral = Spectral({
-  variable: "--font-spectral",
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const manrope = Manrope({
@@ -79,7 +78,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${spectral.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
+      className={`${caveat.variable} ${manrope.variable} ${jetbrainsMono.variable} antialiased`}
     >
       <head>
         <script

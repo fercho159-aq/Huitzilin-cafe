@@ -2,7 +2,7 @@
 
 @theme inline {
   /* Fonts */
-  --font-serif: var(--font-spectral), Georgia, serif;
+  --font-serif: var(--font-caveat), 'Brush Script MT', cursive;
   --font-sans: var(--font-manrope), -apple-system, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 

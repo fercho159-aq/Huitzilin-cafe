@@ -46,7 +46,7 @@ export function Nav({ onOpenCart }: NavProps) {
       <div className="grid grid-cols-[auto_1fr_auto] items-center gap-8 px-8 py-4 max-w-[1480px] mx-auto">
         <Link href="/" className="flex items-center gap-3 font-serif text-[22px] font-medium tracking-tight text-ink">
           <span className="w-[52px] h-[52px] rounded-full bg-cream grid place-items-center overflow-hidden">
-            <img src="/images/logo.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
+            <img src="/images/logo-new.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
           </span>
         </Link>
 

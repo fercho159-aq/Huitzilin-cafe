@@ -12,7 +12,7 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-3 font-serif text-[22px] font-medium tracking-tight text-cream mb-4">
               <span className="w-[44px] h-[44px] rounded-full bg-cream grid place-items-center overflow-hidden">
-                <img src="/images/logo.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
+                <img src="/images/logo-new.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
               </span>
               <span>Huitzitzilin Cafe</span>
             </div>
