@@ -1,0 +1,95 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Fonts */
+  --font-serif: var(--font-spectral), Georgia, serif;
+  --font-sans: var(--font-manrope), -apple-system, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Colors */
+  --color-cream: #F5EFE6;
+  --color-cream-2: #EDE3D2;
+  --color-cream-3: #E2D4BB;
+  --color-paper: #FAF6EE;
+  --color-ink: #1F1610;
+  --color-ink-2: #2A1F17;
+  --color-ink-muted: #6B5947;
+  --color-ink-soft: #8C7A66;
+  --color-line: #D9C9B0;
+  --color-line-soft: #E8DCC4;
+  --color-wood: #8B5A3C;
+  --color-wood-deep: #5C3A24;
+  --color-terracotta: #C2410C;
+  --color-terracotta-deep: #9A2F08;
+  --color-gold: #D4A53A;
+  --color-moss: #6E7F4E;
+  --color-berry: #B83254;
+  --color-talavera: #1A7A8A;
+  --color-talavera-deep: #0F5963;
+  --color-doordash: #EB1700;
+
+  --color-background: var(--color-cream);
+  --color-foreground: var(--color-ink);
+}
+
+:root {
+  --background: #F5EFE6;
+  --foreground: #1F1610;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-image:
+    radial-gradient(1200px 800px at 80% -10%, rgba(184, 71, 42, 0.05), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgba(139, 90, 60, 0.06), transparent 55%);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-cream);
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(235, 23, 0, 0.6); }
+  70% { box-shadow: 0 0 0 9px rgba(235, 23, 0, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(235, 23, 0, 0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-12px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.page-animate {
+  animation: fadeUp 0.35s ease;
+}

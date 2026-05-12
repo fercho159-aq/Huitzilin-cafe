@@ -1,7 +1,25 @@
-/* Huitzitzilin Cafe — menu, branches, FAQ data */
+export interface MenuItem {
+  id: string;
+  cat: string;
+  name: Record<string, string>;
+  desc: Record<string, string>;
+  price: number;
+  img: string;
+  tags: string[];
+}
 
-const MENU_ITEMS = [
-  // Café mexicano
+export interface Branch {
+  id: string;
+  name: string;
+  role: Record<string, string>;
+  address: string;
+  phone: string;
+  hours: string[];
+  coords: { x: number; y: number };
+  seats: number;
+}
+
+export const MENU_ITEMS: MenuItem[] = [
   {
     id: "fc-olla",
     cat: "coffee",
@@ -12,7 +30,7 @@ const MENU_ITEMS = [
       fr: "Notre signature. Café du Chiapas, piloncillo, cannelle et clou de girofle. Servi dans un jarrito.",
     },
     price: 5.5,
-    img: "images/cafe-de-olla.jpg",
+    img: "/images/cafe-de-olla.jpg",
     tags: ["popular"],
   },
   {
@@ -25,7 +43,7 @@ const MENU_ITEMS = [
       fr: "Origine unique de la Sierra Madre. Notes de chocolat noir, noix et orange.",
     },
     price: 5.25,
-    img: "images/cafe-talavera.jpg",
+    img: "/images/cafe-talavera.jpg",
     tags: [],
   },
   {
@@ -38,10 +56,9 @@ const MENU_ITEMS = [
       fr: "Lavé d'altitude. Caramel, pomme, miel d'agave.",
     },
     price: 5.75,
-    img: "images/cafe-talavera.jpg",
+    img: "/images/cafe-talavera.jpg",
     tags: ["new"],
   },
-  // Espresso
   {
     id: "es-espresso",
     cat: "espresso",
@@ -52,7 +69,7 @@ const MENU_ITEMS = [
       fr: "Double dose de notre mélange Tres Cumbres. Ristretto sur demande.",
     },
     price: 3.75,
-    img: "images/cafe-talavera.jpg",
+    img: "/images/cafe-talavera.jpg",
     tags: [],
   },
   {
@@ -65,7 +82,7 @@ const MENU_ITEMS = [
       fr: "Double espresso, lait vapeur, dans une poterie noire d'Oaxaca. Signature maison.",
     },
     price: 5.5,
-    img: "images/cafe-de-olla.jpg",
+    img: "/images/cafe-de-olla.jpg",
     tags: ["popular"],
   },
   {
@@ -78,7 +95,7 @@ const MENU_ITEMS = [
       fr: "Espresso avec juste assez de lait vapeur. 4 oz.",
     },
     price: 4.25,
-    img: "images/cafe-talavera.jpg",
+    img: "/images/cafe-talavera.jpg",
     tags: [],
   },
   {
@@ -91,10 +108,9 @@ const MENU_ITEMS = [
       fr: "Double espresso, micro-mousse soyeuse, soupçon de cannelle.",
     },
     price: 5.25,
-    img: "images/cafe-de-olla.jpg",
+    img: "/images/cafe-de-olla.jpg",
     tags: [],
   },
-  // Bagels
   {
     id: "br-avocado",
     cat: "brunch",
@@ -105,7 +121,7 @@ const MENU_ITEMS = [
       fr: "Bagel du jour, avocat écrasé, œuf, fleur de sel, piment piquín. Végétarien.",
     },
     price: 12.5,
-    img: "images/spread-bagel-matchas.jpg",
+    img: "/images/spread-bagel-matchas.jpg",
     tags: ["popular"],
   },
   {
@@ -118,7 +134,7 @@ const MENU_ITEMS = [
       fr: "Jambon de dinde, fromage oaxaca fondu, épinards, mayo chipotle. Pain grillé.",
     },
     price: 13.5,
-    img: "images/bagel-matcha-corazon.jpg",
+    img: "/images/bagel-matcha-corazon.jpg",
     tags: [],
   },
   {
@@ -131,10 +147,9 @@ const MENU_ITEMS = [
       fr: "Bagel artisanal, jambon, manchego, tomate, coriandre fraîche. Servi chaud.",
     },
     price: 13.0,
-    img: "images/bagel-jarrito.jpg",
+    img: "/images/bagel-jarrito.jpg",
     tags: ["new"],
   },
-  // Pastries / Pan dulce
   {
     id: "pa-concha",
     cat: "pastries",
@@ -145,7 +160,7 @@ const MENU_ITEMS = [
       fr: "Pain sucré traditionnel mexicain, croûte de sucre à la vanille. Cuit chaque matin.",
     },
     price: 4.25,
-    img: "images/spread-bagel-matchas.jpg",
+    img: "/images/spread-bagel-matchas.jpg",
     tags: ["popular"],
   },
   {
@@ -158,7 +173,7 @@ const MENU_ITEMS = [
       fr: "Chocolat mi-amer, fleur de sel de Vancouver Island. Végétalien.",
     },
     price: 3.75,
-    img: "images/spread-bagel-matchas.jpg",
+    img: "/images/spread-bagel-matchas.jpg",
     tags: ["vegan"],
   },
   {
@@ -171,10 +186,9 @@ const MENU_ITEMS = [
       fr: "Banane mûre, farine d'amande, noix. Sans gluten, sans lactose.",
     },
     price: 5.25,
-    img: "images/spread-bagel-matchas.jpg",
+    img: "/images/spread-bagel-matchas.jpg",
     tags: ["gf", "df"],
   },
-  // Matcha & cold
   {
     id: "cd-matcha-fresa",
     cat: "cold",
@@ -185,7 +199,7 @@ const MENU_ITEMS = [
       fr: "Matcha cérémonial d'Uji, confiture de fraises maison, lait d'amande, fraise lyophilisée.",
     },
     price: 7.25,
-    img: "images/matcha-fresa-las-jaras.jpg",
+    img: "/images/matcha-fresa-las-jaras.jpg",
     tags: ["popular", "new", "df"],
   },
   {
@@ -198,7 +212,7 @@ const MENU_ITEMS = [
       fr: "Matcha d'Uji, mousse de lait, cannelle de Ceylan et soupçon de vanille mexicaine.",
     },
     price: 6.75,
-    img: "images/matcha-serape.jpg",
+    img: "/images/matcha-serape.jpg",
     tags: ["popular"],
   },
   {
@@ -211,7 +225,7 @@ const MENU_ITEMS = [
       fr: "Extraction lente 18 h sur grains du Chiapas. Doux, sucré naturellement.",
     },
     price: 5.5,
-    img: "images/cafe-de-olla.jpg",
+    img: "/images/cafe-de-olla.jpg",
     tags: [],
   },
   {
@@ -224,12 +238,12 @@ const MENU_ITEMS = [
       fr: "Horchata maison (riz et cannelle), double espresso versé par-dessus.",
     },
     price: 6.25,
-    img: "images/matcha-serape.jpg",
+    img: "/images/matcha-serape.jpg",
     tags: ["df", "new"],
   },
 ];
 
-const BRANCHES = [
+export const BRANCHES: Branch[] = [
   {
     id: "yaletown",
     name: "Yaletown",
@@ -262,21 +276,41 @@ const BRANCHES = [
   },
 ];
 
-const CHANNEL_NAMES = {
+export const CHANNEL_NAMES: Record<string, Record<string, string>> = {
   pickup: { es: "Pick-up", en: "Pickup", fr: "Cueillette" },
   doordash: { es: "DoorDash", en: "DoorDash", fr: "DoorDash" },
 };
 
-const SAMPLE_CUSTOMERS = ["Émile T.", "Sara M.", "Léa B.", "Ravi P.", "Chloé D.", "Marcus L.", "Yuki H.", "Diego N.", "Aisha K.", "Nora F.", "Théo R.", "Priya S."];
+export const SAMPLE_CUSTOMERS = [
+  "Émile T.", "Sara M.", "Léa B.", "Ravi P.", "Chloé D.", "Marcus L.", "Yuki H.", "Diego N.", "Aisha K.", "Nora F.", "Théo R.", "Priya S.",
+];
 
-function makeSeedOrders(now) {
+export interface OrderLine {
+  id: string;
+  qty: number;
+  name: Record<string, string>;
+  price: number;
+}
+
+export interface Order {
+  id: string;
+  customer: string;
+  channel: string;
+  status: string;
+  placedAt: number;
+  lines: OrderLine[];
+  total: number;
+}
+
+export function makeSeedOrders(now: number): Order[] {
   const items = MENU_ITEMS;
-  const seed = [];
+  const seed: Order[] = [];
   const statuses = ["new", "new", "prep", "prep", "prep", "ready", "ready", "done", "done", "done", "done"];
   for (let i = 0; i < 11; i++) {
-    const ageMin = i < 2 ? Math.random() * 1.5 : i < 5 ? 2 + Math.random() * 4 : i < 7 ? 6 + Math.random() * 5 : 12 + Math.random() * 30;
+    const ageMin =
+      i < 2 ? Math.random() * 1.5 : i < 5 ? 2 + Math.random() * 4 : i < 7 ? 6 + Math.random() * 5 : 12 + Math.random() * 30;
     const lineCount = 1 + Math.floor(Math.random() * 3);
-    const lines = [];
+    const lines: OrderLine[] = [];
     let total = 0;
     for (let j = 0; j < lineCount; j++) {
       const it = items[Math.floor(Math.random() * items.length)];
@@ -296,5 +330,3 @@ function makeSeedOrders(now) {
   }
   return seed;
 }
-
-Object.assign(window, { MENU_ITEMS, BRANCHES, CHANNEL_NAMES, makeSeedOrders });
