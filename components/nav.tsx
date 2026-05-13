@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession, signOut } from "next-auth/react";
 import { useT } from "@/providers/language-provider";
 import { useBranch } from "@/providers/branch-provider";
 import { useCart } from "@/providers/cart-provider";
@@ -21,6 +22,7 @@ export function Nav({ onOpenCart }: NavProps) {
   const { cartCount } = useCart();
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: session } = useSession();
 
   const links = [
     ["/", t.nav.home],
@@ -105,9 +107,27 @@ export function Nav({ onOpenCart }: NavProps) {
               <Icon name="menu" size={18} />
             </button>
 
+            {session?.user ? (
+              <Link
+                href="/profile"
+                className="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-[18px] py-2.5 sm:py-[14px] rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-ink hover:text-cream hover:border-ink transition-colors whitespace-nowrap"
+              >
+                <span className="w-6 h-6 rounded-full bg-terracotta text-cream grid place-items-center font-serif italic text-xs">
+                  {session.user.name?.charAt(0).toUpperCase()}
+                </span>
+                Mi cuenta
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-[18px] py-2.5 sm:py-[14px] rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-ink hover:text-cream hover:border-ink transition-colors whitespace-nowrap"
+              >
+                Iniciar sesión
+              </Link>
+            )}
             <a
               href="/pickup"
-              className="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-[22px] py-2.5 sm:py-[14px] rounded-full bg-ink text-cream text-sm font-semibold tracking-wide hover:bg-terracotta transition-colors whitespace-nowrap"
+              className="hidden md:inline-flex items-center justify-center gap-2 px-4 sm:px-[22px] py-2.5 sm:py-[14px] rounded-full bg-ink text-cream text-sm font-semibold tracking-wide hover:bg-terracotta transition-colors whitespace-nowrap"
               style={{ color: '#F5EFE6' }}
             >
               {t.nav.orderNow}
@@ -174,6 +194,35 @@ export function Nav({ onOpenCart }: NavProps) {
                 <LangSwitcher />
               </div>
             </div>
+
+            {session?.user ? (
+              <>
+                <Link
+                  href="/profile"
+                  className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-ink hover:text-cream hover:border-ink transition-colors mb-3"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  <span className="w-5 h-5 rounded-full bg-terracotta text-cream grid place-items-center font-serif italic text-[10px]">
+                    {session.user.name?.charAt(0).toUpperCase()}
+                  </span>
+                  Mi cuenta
+                </Link>
+                <button
+                  onClick={() => { signOut(); setMobileOpen(false); }}
+                  className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-berry hover:text-cream hover:border-berry transition-colors mb-3"
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-ink hover:text-cream hover:border-ink transition-colors mb-3"
+                onClick={() => setMobileOpen(false)}
+              >
+                Iniciar sesión
+              </Link>
+            )}
 
             <a
               href="/pickup"

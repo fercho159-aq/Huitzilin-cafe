@@ -4,6 +4,7 @@ import "./globals.css";
 import { LanguageProvider } from "@/providers/language-provider";
 import { BranchProvider } from "@/providers/branch-provider";
 import { CartProvider } from "@/providers/cart-provider";
+import { AuthProvider } from "@/providers/session-provider";
 
 const caveat = Caveat({
   variable: "--font-caveat",
@@ -87,11 +88,13 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full">
-        <LanguageProvider>
-          <BranchProvider>
-            <CartProvider>{children}</CartProvider>
-          </BranchProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <BranchProvider>
+              <CartProvider>{children}</CartProvider>
+            </BranchProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );

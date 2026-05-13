@@ -179,6 +179,12 @@ export default function AdminPage() {
           </div>
         </div>
         <div className="flex items-center gap-3.5">
+          <Link
+            href="/admin/loyalty"
+            className="inline-flex items-center justify-center gap-2 px-[14px] py-2 rounded-full border border-cream/20 text-cream text-[13px] font-semibold hover:bg-cream/10 transition-colors"
+          >
+            Lealtad
+          </Link>
           <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-cream">
             <span className="w-[7px] h-[7px] rounded-full bg-[#9CC07C]" />
             {t.admin.live}

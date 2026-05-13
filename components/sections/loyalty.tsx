@@ -1,13 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { useT } from "@/providers/language-provider";
 import { Icon } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 export function Loyalty() {
   const { t } = useT();
-  const stamps = 7;
+  const { data: session } = useSession();
+  const [cardData, setCardData] = useState<{ stamps: number; freeDrinks: number } | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (session?.user?.id) {
+      setLoading(true);
+      fetch("/api/loyalty/card")
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.stamps !== undefined) {
+            setCardData({ stamps: data.stamps, freeDrinks: data.freeDrinks });
+          }
+        })
+        .finally(() => setLoading(false));
+    }
+  }, [session]);
+
+  const stamps = cardData?.stamps ?? 0;
+  const isLoggedIn = !!session?.user;
 
   return (
     <section className="py-24" id="loyalty">
@@ -48,15 +69,25 @@ export function Loyalty() {
                 </div>
               ))}
             </div>
-            <Link
-              href="/pickup"
-              className="inline-flex items-center justify-center gap-2 px-7 py-[18px] rounded-full bg-ink text-cream text-[15px] font-semibold tracking-wide hover:bg-terracotta transition-colors mt-8"
-            >
-              {t.loyalty.join} <Icon name="arrow" size={16} />
-            </Link>
+            {isLoggedIn ? (
+              <Link
+                href="/profile"
+                className="inline-flex items-center justify-center gap-2 px-7 py-[18px] rounded-full bg-ink text-cream text-[15px] font-semibold tracking-wide hover:bg-terracotta transition-colors mt-8"
+              >
+                Ver mi tarjeta <Icon name="arrow" size={16} />
+              </Link>
+            ) : (
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center gap-2 px-7 py-[18px] rounded-full bg-ink text-cream text-[15px] font-semibold tracking-wide hover:bg-terracotta transition-colors mt-8"
+              >
+                {t.loyalty.join} <Icon name="arrow" size={16} />
+              </Link>
+            )}
           </div>
           <div>
-            <div className="relative rounded-[18px] p-8 flex flex-col justify-between aspect-[1.6/1] shadow-[0_4px_12px_rgba(31,22,16,0.08),0_24px_60px_rgba(31,22,16,0.12)] overflow-hidden"
+            <div
+              className="relative rounded-[18px] p-8 flex flex-col justify-between aspect-[1.6/1] shadow-[0_4px_12px_rgba(31,22,16,0.08),0_24px_60px_rgba(31,22,16,0.12)] overflow-hidden"
               style={{ background: "linear-gradient(135deg, #2A1F17 0%, #4A332A 100%)" }}
             >
               <div
@@ -66,9 +97,13 @@ export function Loyalty() {
               <div className="flex justify-between items-start relative z-10">
                 <div>
                   <div className="font-mono text-[11px] tracking-[0.18em] uppercase text-cream/70">{t.loyalty.memberCard}</div>
-                  <div className="font-mono text-base tracking-[0.18em] mt-1.5 text-cream">B-2406-0142</div>
+                  <div className="font-mono text-base tracking-[0.18em] mt-1.5 text-cream">
+                    {isLoggedIn ? `B-${session.user.id.slice(-6).toUpperCase()}` : "B-2406-0142"}
+                  </div>
                 </div>
-                <div className="w-11 h-11 rounded-full bg-cream text-ink grid place-items-center font-serif italic text-[22px]">B</div>
+                <div className="w-11 h-11 rounded-full bg-cream text-ink grid place-items-center font-serif italic text-[22px]">
+                  {isLoggedIn ? session.user.name?.charAt(0).toUpperCase() : "B"}
+                </div>
               </div>
               <div className="relative z-10">
                 <div className="font-mono text-[11px] tracking-[0.12em] uppercase text-cream/70 mb-3">
@@ -76,8 +111,8 @@ export function Loyalty() {
                   <span className="text-cream font-semibold">{stamps}</span> {t.loyalty.progressOf} 10{" "}
                   {t.loyalty.stamps}
                 </div>
-                <div className="grid grid-cols-8 gap-2">
-                  {Array.from({ length: 8 }).map((_, i) => (
+                <div className="grid grid-cols-10 gap-2">
+                  {Array.from({ length: 10 }).map((_, i) => (
                     <div
                       key={i}
                       className={cn(
