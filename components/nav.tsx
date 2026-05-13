@@ -107,6 +107,14 @@ export function Nav({ onOpenCart }: NavProps) {
               <Icon name="menu" size={18} />
             </button>
 
+            {(session?.user?.role === "BARISTA" || session?.user?.role === "ADMIN") && (
+              <Link
+                href="/admin/loyalty"
+                className="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-[18px] py-2.5 sm:py-[14px] rounded-full bg-terracotta text-cream text-sm font-semibold tracking-wide hover:bg-terracotta-deep transition-colors whitespace-nowrap"
+              >
+                Validar
+              </Link>
+            )}
             {session?.user ? (
               <Link
                 href="/profile"
@@ -197,6 +205,15 @@ export function Nav({ onOpenCart }: NavProps) {
 
             {session?.user ? (
               <>
+                {(session.user.role === "BARISTA" || session.user.role === "ADMIN") && (
+                  <Link
+                    href="/admin/loyalty"
+                    className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full bg-terracotta text-cream text-sm font-semibold tracking-wide hover:bg-terracotta-deep transition-colors mb-3"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    Validar compra
+                  </Link>
+                )}
                 <Link
                   href="/profile"
                   className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full border border-line bg-paper text-ink text-sm font-semibold tracking-wide hover:bg-ink hover:text-cream hover:border-ink transition-colors mb-3"
