@@ -169,7 +169,7 @@ export default function AdminPage() {
       <div className="flex items-center justify-between px-8 py-5 border-b border-cream/10">
         <div className="flex items-center gap-4">
           <span className="w-[44px] h-[44px] rounded-full bg-cream grid place-items-center overflow-hidden">
-            <img src="/images/logo-new.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
+            <img src="/images/logo.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
           </span>
           <div>
             <div className="font-serif text-[22px] font-medium text-cream">{t.admin.title}</div>

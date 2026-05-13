@@ -52,7 +52,7 @@ export function Nav({ onOpenCart }: NavProps) {
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 sm:gap-3 font-serif text-xl sm:text-[22px] font-medium tracking-tight text-ink flex-shrink-0">
           <span className="w-10 h-10 sm:w-[52px] sm:h-[52px] rounded-full bg-cream grid place-items-center overflow-hidden">
-            <img src="/images/logo-new.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
+            <img src="/images/logo.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
           </span>
           <span className="hidden sm:inline">Huitzitzilin</span>
         </Link>

@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@theme inline {
+@theme {
   /* Fonts */
   --font-serif: var(--font-caveat), 'Brush Script MT', cursive;
   --font-sans: var(--font-manrope), -apple-system, system-ui, sans-serif;
@@ -35,6 +35,26 @@
 :root {
   --background: #F5EFE6;
   --foreground: #1F1610;
+  --color-cream: #F5EFE6;
+  --color-cream-2: #EDE3D2;
+  --color-cream-3: #E2D4BB;
+  --color-paper: #FAF6EE;
+  --color-ink: #1F1610;
+  --color-ink-2: #2A1F17;
+  --color-ink-muted: #6B5947;
+  --color-ink-soft: #8C7A66;
+  --color-line: #D9C9B0;
+  --color-line-soft: #E8DCC4;
+  --color-wood: #8B5A3C;
+  --color-wood-deep: #5C3A24;
+  --color-terracotta: #C2410C;
+  --color-terracotta-deep: #9A2F08;
+  --color-gold: #D4A53A;
+  --color-moss: #6E7F4E;
+  --color-berry: #B83254;
+  --color-talavera: #1A7A8A;
+  --color-talavera-deep: #0F5963;
+  --color-doordash: #EB1700;
 }
 
 html {
