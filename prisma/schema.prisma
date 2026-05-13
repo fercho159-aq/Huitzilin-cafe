@@ -1,0 +1,51 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  phone     String?
+  password  String   // hashed with bcrypt
+  role      UserRole @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loyaltyCard LoyaltyCard?
+  stampsGiven StampLog[] @relation("BaristaStamps")
+}
+
+model LoyaltyCard {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stamps      Int      @default(0)
+  freeDrinks  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  logs StampLog[]
+}
+
+model StampLog {
+  id        String   @id @default(cuid())
+  cardId    String
+  card      LoyaltyCard @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  baristaId String
+  barista   User     @relation("BaristaStamps", fields: [baristaId], references: [id])
+  branch    String   @default("Yaletown")
+  createdAt DateTime @default(now())
+}
+
+enum UserRole {
+  CLIENT
+  BARISTA
+  ADMIN
+}

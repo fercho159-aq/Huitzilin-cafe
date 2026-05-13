@@ -79,14 +79,15 @@ img {
   max-width: 100%;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+@layer base {
+  a {
+    text-decoration: none;
+  }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
+  button {
+    font-family: inherit;
+    cursor: pointer;
+  }
 }
 
 ::selection {
