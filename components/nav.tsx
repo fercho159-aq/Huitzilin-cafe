@@ -104,12 +104,13 @@ export function Nav({ onOpenCart }: NavProps) {
             <Icon name="menu" size={18} />
           </button>
 
-          <Link
+          <a
             href="/pickup"
             className="hidden sm:inline-flex items-center justify-center gap-2 px-4 sm:px-[22px] py-2.5 sm:py-[14px] rounded-full bg-ink text-cream text-sm font-semibold tracking-wide hover:bg-terracotta transition-colors whitespace-nowrap"
+            style={{ color: '#F5EFE6' }}
           >
             {t.nav.orderNow}
-          </Link>
+          </a>
         </div>
       </div>
 
@@ -172,13 +173,14 @@ export function Nav({ onOpenCart }: NavProps) {
               </div>
             </div>
 
-            <Link
+            <a
               href="/pickup"
               className="inline-flex items-center justify-center gap-2 w-full px-5 py-3.5 rounded-full bg-ink text-cream text-sm font-semibold tracking-wide hover:bg-terracotta transition-colors"
+              style={{ color: '#F5EFE6' }}
               onClick={() => setMobileOpen(false)}
             >
               {t.nav.orderNow}
-            </Link>
+            </a>
           </div>
         </div>
       </div>
