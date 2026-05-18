@@ -7,27 +7,6 @@ export function About() {
   return (
     <section className="py-24" id="story">
       <div className="max-w-[1320px] mx-auto px-8">
-        {/* León inspiration band */}
-        <div className="mb-24 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-12 items-end">
-          <div className="relative rounded-[14px] overflow-hidden aspect-[4/3]">
-            <img
-              src="/images/leon-cathedral.jpg"
-              alt="Catedral y plaza de León, Guanajuato"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute top-6 left-6 bg-cream/95 text-ink font-mono text-[11px] tracking-[0.14em] uppercase px-3 py-2 rounded-full">
-              {t.about.leonEyebrow} · León, GTO
-            </div>
-          </div>
-          <div>
-            <h3 className="font-serif text-[clamp(28px,3vw,44px)] font-medium leading-[1.1] tracking-tight mb-5">
-              <span className="block">León, Guanajuato.</span>
-              <em className="block italic text-terracotta">Donde empezó todo.</em>
-            </h3>
-            <p className="text-[16px] leading-[1.7] text-ink-2 max-w-[520px]">{t.about.leonCaption}</p>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-20 items-center">
           <div className="relative aspect-[4/5] rounded-[14px] overflow-hidden max-lg:max-w-[480px]">
             <img

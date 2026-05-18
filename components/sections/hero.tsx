@@ -10,8 +10,8 @@ export function Hero() {
   return (
     <section className="relative min-h-[86vh] overflow-hidden bg-ink-2 text-cream">
       <img
-        src="/images/interior.jpg"
-        alt="Huitzitzilin Cafe interior"
+        src="/images/leon-cathedral.jpg"
+        alt="Catedral y plaza de León, Guanajuato — inspiración de Huitzitzilin Cafe"
         className="absolute inset-0 w-full h-full object-cover opacity-55"
       />
       <div
