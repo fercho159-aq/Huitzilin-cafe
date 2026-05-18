@@ -59,6 +59,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -69,6 +70,7 @@ body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
   background-image:
     radial-gradient(1200px 800px at 80% -10%, rgba(184, 71, 42, 0.05), transparent 60%),
     radial-gradient(900px 600px at -10% 30%, rgba(139, 90, 60, 0.06), transparent 55%);

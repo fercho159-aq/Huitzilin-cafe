@@ -146,9 +146,10 @@ export function Nav({ onOpenCart }: NavProps) {
 
       {/* Mobile drawer */}
       <div
+        aria-hidden={!mobileOpen}
         className={cn(
-          "fixed inset-0 z-[110] transition-opacity duration-300",
-          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          "fixed inset-0 z-[110] transition-opacity duration-300 lg:hidden",
+          mobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none invisible"
         )}
       >
         {/* Overlay */}

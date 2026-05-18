@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Icon } from "@/components/icons";
+import { PageLayout } from "@/components/page-layout";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -37,8 +38,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-8 py-20">
-      <div className="w-full max-w-[420px]">
+    <PageLayout>
+      <div className="min-h-[70vh] flex items-center justify-center px-8 py-20">
+        <div className="w-full max-w-[420px]">
         <div className="font-mono text-xs tracking-[0.18em] uppercase text-ink-muted inline-flex items-center gap-2.5 mb-4">
           <span className="w-[30px] h-px bg-ink-muted" />
           Nueva cuenta
@@ -58,6 +60,8 @@ export default function RegisterPage() {
             <label className="block font-mono text-[11px] tracking-[0.14em] uppercase text-ink-muted mb-1.5">Nombre</label>
             <input
               type="text"
+              name="name"
+              autoComplete="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -69,6 +73,8 @@ export default function RegisterPage() {
             <label className="block font-mono text-[11px] tracking-[0.14em] uppercase text-ink-muted mb-1.5">Email</label>
             <input
               type="email"
+              name="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -80,6 +86,8 @@ export default function RegisterPage() {
             <label className="block font-mono text-[11px] tracking-[0.14em] uppercase text-ink-muted mb-1.5">Teléfono (opcional)</label>
             <input
               type="tel"
+              name="phone"
+              autoComplete="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-xl border border-line bg-paper text-ink placeholder:text-ink-soft focus:outline-none focus:border-terracotta transition-colors"
@@ -90,6 +98,8 @@ export default function RegisterPage() {
             <label className="block font-mono text-[11px] tracking-[0.14em] uppercase text-ink-muted mb-1.5">Contraseña</label>
             <input
               type="password"
+              name="new-password"
+              autoComplete="new-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -113,7 +123,8 @@ export default function RegisterPage() {
             Inicia sesión
           </Link>
         </p>
+        </div>
       </div>
-    </div>
+    </PageLayout>
   );
 }

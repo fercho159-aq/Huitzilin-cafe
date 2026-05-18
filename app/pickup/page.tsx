@@ -101,31 +101,31 @@ export default function PickupPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 mb-12">
+          <div className="flex items-center gap-2 sm:gap-3 mb-12 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible">
             {[t.pickup.step1, t.pickup.step2, t.pickup.step3, t.pickup.step4].map((label, i) => {
               const idx = i + 1;
               const active = idx === stepIdx;
               const done = idx < stepIdx || step === "confirm";
               return (
-                <div key={i} className="flex items-center gap-3 flex-1">
+                <div key={i} className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                   <div
                     className={cn(
-                      "flex items-center gap-3.5 font-mono text-xs tracking-[0.14em] uppercase",
+                      "flex items-center gap-2 sm:gap-3.5 font-mono text-[10px] sm:text-xs tracking-[0.14em] uppercase flex-shrink-0",
                       active && "font-semibold",
                       done && "text-ink-muted"
                     )}
                   >
                     <span
                       className={cn(
-                        "w-7 h-7 rounded-full grid place-items-center text-[13px]",
+                        "w-6 h-6 sm:w-7 sm:h-7 rounded-full grid place-items-center text-[11px] sm:text-[13px] flex-shrink-0",
                         done ? "bg-moss text-cream" : active ? "bg-ink text-cream" : "bg-cream-2 text-ink-muted"
                       )}
                     >
                       {done ? "✓" : idx}
                     </span>
-                    <span>{label}</span>
+                    <span className="whitespace-nowrap">{label}</span>
                   </div>
-                  {i < 3 && <div className="flex-1 h-px bg-line" />}
+                  {i < 3 && <div className="flex-1 h-px bg-line min-w-[8px]" />}
                 </div>
               );
             })}

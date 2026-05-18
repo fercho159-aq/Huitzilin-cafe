@@ -120,7 +120,16 @@ export function MenuSection() {
                 <div className="px-[22px] py-5 flex flex-col flex-1">
                   <div className="flex justify-between items-baseline gap-4 mb-2">
                     <div className="font-serif text-[22px] font-medium text-ink leading-tight">{it.name[lang]}</div>
-                    <div className="font-mono text-sm text-ink-muted whitespace-nowrap">${it.price.toFixed(2)}</div>
+                    <div className="font-mono text-sm text-ink-muted whitespace-nowrap text-right">
+                      {it.priceLg ? (
+                        <>
+                          <div>{it.sizeSm} ${it.price.toFixed(2)}</div>
+                          <div className="text-[11px] text-ink-soft">{it.sizeLg} ${it.priceLg.toFixed(2)}</div>
+                        </>
+                      ) : (
+                        <span>${it.price.toFixed(2)}</span>
+                      )}
+                    </div>
                   </div>
                   <div className="text-sm text-ink-muted leading-snug mb-4 flex-1">{it.desc[lang]}</div>
                   <button

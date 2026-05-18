@@ -13,14 +13,45 @@ interface ProfileClientProps {
 
 export function ProfileClient({ user, card }: ProfileClientProps) {
   const [qrUrl, setQrUrl] = useState("");
+  const [qrError, setQrError] = useState(false);
   const [redeeming, setRedeeming] = useState(false);
   const [redeemMsg, setRedeemMsg] = useState("");
+  const [signingOut, setSigningOut] = useState(false);
   const [currentFreeDrinks, setCurrentFreeDrinks] = useState(card.freeDrinks);
-  const [currentStamps, setCurrentStamps] = useState(card.stamps);
+  const [currentStamps] = useState(card.stamps);
 
   useEffect(() => {
-    QRCode.toDataURL(user.id, { width: 280, margin: 2 }).then(setQrUrl);
+    let cancelled = false;
+    if (!user.id) {
+      setQrError(true);
+      return;
+    }
+    QRCode.toDataURL(user.id, { width: 280, margin: 2 })
+      .then((url) => {
+        if (!cancelled) {
+          setQrUrl(url);
+          setQrError(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setQrError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [user.id]);
+
+  const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await signOut({ redirect: false });
+    } catch {
+      // fall through to hard redirect
+    }
+    // Force full reload so SSR sees the cleared cookie.
+    window.location.href = "/";
+  };
 
   const handleRedeem = async () => {
     if (currentFreeDrinks <= 0) return;
@@ -51,10 +82,12 @@ export function ProfileClient({ user, card }: ProfileClientProps) {
           <p className="text-ink-muted text-sm mt-1">{user.email}</p>
         </div>
         <button
-          onClick={() => signOut({ callbackUrl: "/" })}
-          className="text-sm text-ink-muted hover:text-terracotta transition-colors"
+          type="button"
+          onClick={handleSignOut}
+          disabled={signingOut}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-line bg-paper text-ink text-sm font-semibold hover:bg-ink hover:text-cream transition-colors disabled:opacity-60"
         >
-          Cerrar sesión
+          {signingOut ? "Saliendo..." : "Cerrar sesión"}
         </button>
       </div>
 
@@ -109,8 +142,17 @@ export function ProfileClient({ user, card }: ProfileClientProps) {
         <div className="flex justify-center">
           {qrUrl ? (
             <img src={qrUrl} alt="QR de lealtad" className="w-[200px] h-[200px] rounded-xl" />
+          ) : qrError ? (
+            <div className="w-[200px] h-[200px] bg-cream-2 rounded-xl grid place-items-center text-center px-4">
+              <div>
+                <div className="font-mono text-[11px] tracking-[0.12em] uppercase text-ink-muted mb-2">Código</div>
+                <div className="font-mono text-base tracking-[0.18em] text-ink break-all">
+                  B-{user.id.slice(-6).toUpperCase()}
+                </div>
+              </div>
+            </div>
           ) : (
-            <div className="w-[200px] h-[200px] bg-cream-2 rounded-xl animate-pulse" />
+            <div className="w-[200px] h-[200px] bg-cream-2 rounded-xl animate-pulse" aria-label="Cargando QR" />
           )}
         </div>
       </div>

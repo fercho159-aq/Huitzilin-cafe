@@ -84,9 +84,17 @@ function OrderCard({
 
 export default function AdminPage() {
   const { t, lang } = useT();
-  const [orders, setOrders] = useState<Order[]>(() => makeSeedOrders(Date.now()));
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [mounted, setMounted] = useState(false);
   const [freshIds, setFreshIds] = useState<Set<string>>(new Set());
   const [tick, setTick] = useState(0);
+
+  // Seed initial orders only on the client to avoid SSR/CSR hydration mismatch
+  // (makeSeedOrders uses Date.now() for placedAt timestamps).
+  useEffect(() => {
+    setOrders(makeSeedOrders(Date.now()));
+    setMounted(true);
+  }, []);
 
   // Re-render every 5s for live "ago" timers
   useEffect(() => {
@@ -166,26 +174,27 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-[#1A130D] text-cream page-animate">
-      <div className="flex items-center justify-between px-8 py-5 border-b border-cream/10">
-        <div className="flex items-center gap-4">
-          <span className="w-[44px] h-[44px] rounded-full bg-cream grid place-items-center overflow-hidden">
+      <div className="flex items-center justify-between gap-3 px-4 sm:px-8 py-4 sm:py-5 border-b border-cream/10 flex-wrap">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <span className="w-10 h-10 sm:w-[44px] sm:h-[44px] rounded-full bg-cream grid place-items-center overflow-hidden">
             <img src="/images/logo.png" alt="Huitzitzilin Cafe logo" className="w-full h-full object-cover" />
           </span>
           <div>
-            <div className="font-serif text-[22px] font-medium text-cream">{t.admin.title}</div>
-            <div className="font-mono text-[11px] tracking-[0.12em] uppercase text-cream/55 mt-0.5">
-              Huitzitzilin Cafe · Yaletown · {new Date().toLocaleDateString(t.locale)}
+            <div className="font-serif text-lg sm:text-[22px] font-medium text-cream">{t.admin.title}</div>
+            <div className="font-mono text-[10px] sm:text-[11px] tracking-[0.12em] uppercase text-cream/55 mt-0.5">
+              Huitzitzilin Cafe · Yaletown
+              {mounted && <> · {new Date().toLocaleDateString(t.locale)}</>}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3.5">
+        <div className="flex items-center gap-2 sm:gap-3.5 flex-wrap">
           <Link
             href="/admin/loyalty"
             className="inline-flex items-center justify-center gap-2 px-[14px] py-2 rounded-full border border-cream/20 text-cream text-[13px] font-semibold hover:bg-cream/10 transition-colors"
           >
             Lealtad
           </Link>
-          <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-cream">
+          <span className="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-cream">
             <span className="w-[7px] h-[7px] rounded-full bg-[#9CC07C]" />
             {t.admin.live}
           </span>
@@ -199,33 +208,33 @@ export default function AdminPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 border-b border-cream/10">
-        <div className="px-8 py-7 border-r border-cream/10">
-          <div className="font-mono text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.todayOrders}</div>
-          <div className="font-serif text-4xl font-medium">
+        <div className="px-4 sm:px-8 py-5 sm:py-7 border-r border-cream/10">
+          <div className="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.todayOrders}</div>
+          <div className="font-serif text-2xl sm:text-4xl font-medium">
             {todayOrders}
             <span className="font-mono text-xs text-moss ml-2">+{Math.floor(todayOrders * 0.08)}</span>
           </div>
         </div>
-        <div className="px-8 py-7 border-r border-cream/10">
-          <div className="font-mono text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.revenue}</div>
-          <div className="font-serif text-4xl font-medium">
+        <div className="px-4 sm:px-8 py-5 sm:py-7 lg:border-r border-cream/10">
+          <div className="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.revenue}</div>
+          <div className="font-serif text-2xl sm:text-4xl font-medium">
             ${revenue.toFixed(2)}
             <span className="font-mono text-xs text-moss ml-2">+12.4%</span>
           </div>
         </div>
-        <div className="px-8 py-7 border-r border-cream/10">
-          <div className="font-mono text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.avgPrep}</div>
-          <div className="font-serif text-4xl font-medium">
+        <div className="px-4 sm:px-8 py-5 sm:py-7 border-r border-cream/10 border-t lg:border-t-0">
+          <div className="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.avgPrep}</div>
+          <div className="font-serif text-2xl sm:text-4xl font-medium">
             9.2{" "}
             <span className="font-mono text-sm text-cream/55">{t.admin.avgPrepUnit}</span>
           </div>
         </div>
-        <div className="px-8 py-7">
-          <div className="font-mono text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.pickupShare}</div>
+        <div className="px-4 sm:px-8 py-5 sm:py-7 border-t lg:border-t-0">
+          <div className="font-mono text-[10px] sm:text-[11px] tracking-[0.14em] uppercase text-cream/55 mb-2">{t.admin.pickupShare}</div>
           <div className="flex items-center gap-3.5 mt-1">
-            <div className="font-serif text-[28px]">
+            <div className="font-serif text-xl sm:text-[28px]">
               {puPct}
-              <span className="text-lg text-cream/50">/</span>
+              <span className="text-base sm:text-lg text-cream/50">/</span>
               {ddPct}
             </div>
             <div className="flex-1 h-1.5 bg-cream/10 rounded-full overflow-hidden flex">
@@ -236,9 +245,12 @@ export default function AdminPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 h-[calc(100vh-230px)] overflow-hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:h-[calc(100vh-230px)] lg:overflow-hidden">
         {cols.map((c) => (
-          <div key={c} className="p-4 border-r border-cream/10 overflow-y-auto flex flex-col gap-3 last:border-r-0">
+          <div
+            key={c}
+            className="p-4 border-t sm:border-t-0 sm:border-r border-cream/10 lg:overflow-y-auto flex flex-col gap-3 last:border-r-0"
+          >
             <div className="flex items-center justify-between px-1 pb-3 border-b border-cream/10 mb-1">
               <div className="flex items-center gap-2 font-mono text-xs tracking-[0.14em] uppercase text-cream/70">
                 <span className="w-2 h-2 rounded-full" style={{ background: STATUS_COLORS[c] }} />

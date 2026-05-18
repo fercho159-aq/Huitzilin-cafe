@@ -36,9 +36,10 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
         onClick={onClose}
       />
       <aside
+        aria-hidden={!open}
         className={cn(
-          "fixed top-0 right-0 bottom-0 w-[460px] max-w-[100vw] bg-cream z-[101] flex flex-col shadow-[-20px_0_60px_rgba(31,22,16,0.18)] transition-transform duration-300",
-          open ? "translate-x-0" : "translate-x-full"
+          "fixed top-0 right-0 bottom-0 w-[460px] max-w-[100vw] bg-cream z-[101] flex flex-col shadow-[-20px_0_60px_rgba(31,22,16,0.18)] transition-[transform,visibility] duration-300",
+          open ? "translate-x-0 visible" : "translate-x-full invisible delay-300"
         )}
         style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
       >
@@ -46,7 +47,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
           <div>
             <div className="font-serif text-[26px] font-medium">{t.pickup.cartTitle}</div>
             <div className="font-mono text-[11px] tracking-widest text-ink-muted uppercase mt-0.5">
-              {totalQty} {t.pickup.cartItems}
+              {totalQty} {totalQty === 1 ? t.pickup.cartItem : t.pickup.cartItems}
             </div>
           </div>
           <button

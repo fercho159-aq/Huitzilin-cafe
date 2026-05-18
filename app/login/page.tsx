@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { Icon } from "@/components/icons";
 
-export default function LoginPage() {
-  const router = useRouter();
+function LoginForm() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -24,15 +25,16 @@ export default function LoginPage() {
       redirect: false,
     });
 
-    setLoading(false);
-
-    if (res?.error) {
+    if (!res || res.error || !res.ok) {
+      setLoading(false);
       setError("Email o contraseña incorrectos");
       return;
     }
 
-    router.push("/profile");
-    router.refresh();
+    // Hard navigation to avoid client/server cookie race when SSR-rendering the
+    // destination right after credential sign-in.
+    const dest = callbackUrl.startsWith("/") ? callbackUrl : "/profile";
+    window.location.href = dest;
   };
 
   return (
@@ -59,6 +61,8 @@ export default function LoginPage() {
             </label>
             <input
               type="email"
+              name="email"
+              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -72,6 +76,8 @@ export default function LoginPage() {
             </label>
             <input
               type="password"
+              name="current-password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -96,5 +102,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginForm />
+    </Suspense>
   );
 }

@@ -7,16 +7,31 @@ export default async function ProfilePage() {
   const session = await auth();
 
   if (!session?.user?.id) {
-    redirect("/login");
+    redirect("/login?callbackUrl=%2Fprofile");
   }
 
-  const card = await prisma.loyaltyCard.findUnique({
+  let card = await prisma.loyaltyCard.findUnique({
     where: { userId: session.user.id },
     include: { user: { select: { name: true, email: true } } },
   });
 
+  // Self-heal: any authenticated user should always have a loyalty card.
+  // Older accounts created before the card was wired in may be missing one;
+  // create it lazily instead of bouncing the user back to /login.
   if (!card) {
-    redirect("/login");
+    await prisma.loyaltyCard.upsert({
+      where: { userId: session.user.id },
+      update: {},
+      create: { userId: session.user.id, stamps: 0, freeDrinks: 0 },
+    });
+    card = await prisma.loyaltyCard.findUnique({
+      where: { userId: session.user.id },
+      include: { user: { select: { name: true, email: true } } },
+    });
+  }
+
+  if (!card) {
+    redirect("/login?callbackUrl=%2Fprofile");
   }
 
   return (

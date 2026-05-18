@@ -1,10 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { useT } from "@/providers/language-provider";
 
 export function Footer() {
   const { t } = useT();
+  const { data: session } = useSession();
+  const isStaff =
+    session?.user?.role === "BARISTA" || session?.user?.role === "ADMIN";
   return (
     <footer className="bg-ink text-cream pt-20 pb-9">
       <div className="max-w-[1320px] mx-auto px-8">
@@ -19,6 +23,8 @@ export function Footer() {
             <p className="font-serif text-[28px] font-normal leading-tight my-4 max-w-[360px]">{t.footer.tagline}</p>
             <div className="flex gap-2">
               <input
+                suppressHydrationWarning
+                type="email"
                 className="flex-1 bg-transparent border border-cream/25 rounded-full px-4 py-2.5 text-cream text-[13px] font-sans placeholder:text-cream/50"
                 placeholder={t.footer.newsletterPh}
               />
@@ -58,11 +64,13 @@ export function Footer() {
                 {l}
               </span>
             ))}
-            <div className="mt-4">
-              <Link href="/admin" className="block text-sm text-cream/70 py-1 hover:text-terracotta transition-colors">
-                {t.nav.admin} →
-              </Link>
-            </div>
+            {isStaff && (
+              <div className="mt-4">
+                <Link href="/admin" className="block text-sm text-cream/70 py-1 hover:text-terracotta transition-colors">
+                  {t.nav.admin} →
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex justify-between items-center pt-7 border-t border-cream/10 font-mono text-xs text-cream/55 tracking-wide flex-wrap gap-4">
